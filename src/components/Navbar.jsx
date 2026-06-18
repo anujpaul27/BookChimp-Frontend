@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-// import { useTheme } from "next-themes";
+import { useTheme } from "next-themes";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   BookOpen, ShoppingCart, Search, Sun, Moon, Menu, X, ChevronDown,
@@ -19,7 +19,7 @@ const navLinks = [
 ];
 
 export default function Navbar() {
-  // const { theme, setTheme, resolvedTheme } = useTheme();
+  const { theme, setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
