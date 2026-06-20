@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { Eye, EyeOff, Loader2, BookOpen } from "lucide-react";
 import { toast } from "react-toastify";
 import Image from "next/image";
+import { authClient } from "../lib/auth-client";
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -33,10 +34,25 @@ export default function LoginPage() {
 
     setLoading(true);
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1600));
-      toast.success("Login successful! Welcome back to BookChimp 📚");
+      const {data,error} = await authClient.signIn.email({
+        email: formData.email,
+        password: formData.password,
+        callbackURL: '/',
+        rememberMe: formData.formData
+      })
+      
+      if (error) {
+        console.error(error);
+        toast.error(error.message || "Login failed.");
+        return;
+      }
+
+      if (data) {
+        console.log(data);
+        toast.success("Login successful! Welcome back to BookChimp 📚");
+      }
     } catch (err) {
-      toast.error("Invalid credentials. Please try again.");
+      toast.error( err.message || "Invalid credentials. Please try again.");
     } finally {
       setLoading(false);
     }

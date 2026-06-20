@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { Eye, EyeOff, Loader2, BookOpen } from "lucide-react";
 import { toast } from "react-toastify";
 import Image from "next/image";
+import { authClient } from "../lib/auth-client";
 
 export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -14,7 +15,6 @@ export default function RegisterPage() {
     name: "",
     email: "",
     password: "",
-    confirmPassword: "",
   });
 
   const validateForm = () => {
@@ -26,8 +26,6 @@ export default function RegisterPage() {
     if (!formData.password) newErrors.password = "Password is required";
     else if (formData.password.length < 6)
       newErrors.password = "Password must be at least 6 characters";
-    if (formData.password !== formData.confirmPassword)
-      newErrors.confirmPassword = "Passwords do not match";
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -36,12 +34,26 @@ export default function RegisterPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateForm()) return;
-
+    console.log(`${process.env.MONGODB_URI}`)
     setLoading(true);
     try {
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-      toast.success("Account created successfully! 🎉");
-      // Redirect to login
+      const { data, error } = await authClient.signUp.email({
+        email: formData.email,
+        password: formData.password,
+        name: formData.name,
+        callbackURL: "/",
+      });
+
+      if (error) {
+        console.error(error);
+        toast.error(error.message || "Sign up failed.");
+        return;
+      }
+
+      if (data) {
+        console.log(data);
+        toast.success("Account created successfully! 🎉");
+      }
     } catch (error) {
       toast.error("Something went wrong. Please try again.");
     } finally {
@@ -87,7 +99,7 @@ export default function RegisterPage() {
         </motion.div>
       </div>
 
-        {/* Right side and form side   */}
+      {/* Right side and form side   */}
       <div className="flex-1 flex items-center justify-center p-6 bg-base-100">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
@@ -164,26 +176,6 @@ export default function RegisterPage() {
               </div>
               {errors.password && (
                 <p className="text-red-500 text-sm mt-1">{errors.password}</p>
-              )}
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium mb-2">
-                Confirm Password
-              </label>
-              <input
-                type={showPassword ? "text" : "password"}
-                value={formData.confirmPassword}
-                onChange={(e) =>
-                  setFormData({ ...formData, confirmPassword: e.target.value })
-                }
-                className="input input-bordered w-full"
-                placeholder="Confirm your password"
-              />
-              {errors.confirmPassword && (
-                <p className="text-red-500 text-sm mt-1">
-                  {errors.confirmPassword}
-                </p>
               )}
             </div>
 
