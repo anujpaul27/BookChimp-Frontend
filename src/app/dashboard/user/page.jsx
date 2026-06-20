@@ -7,7 +7,6 @@ import {
   PieChart, Pie, Cell
 } from "recharts";
 
-import Delivery from "./delivery/page";
 import DeliveryHistory from "./delivery-history/page";
 import MyReadingList from "./my-reading-list/page";
 import MyReviews from "./my-reviews/page";
@@ -99,7 +98,6 @@ export default function UserDashboard() {
       </div>
 
       {/* Sections */}
-      <Delivery />
       <DeliveryHistory />
       <MyReadingList />
       <MyReviews />
