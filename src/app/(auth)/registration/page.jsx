@@ -15,6 +15,7 @@ export default function RegisterPage() {
     name: "",
     email: "",
     password: "",
+    role: ""
   });
 
   const validateForm = () => {
@@ -34,13 +35,14 @@ export default function RegisterPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateForm()) return;
-    console.log(`${process.env.MONGODB_URI}`)
+    console.log(`${process.env.MONGODB_URI}`);
     setLoading(true);
     try {
       const { data, error } = await authClient.signUp.email({
         email: formData.email,
         password: formData.password,
         name: formData.name,
+        role: formData.role,
         callbackURL: "/",
       });
 
@@ -176,6 +178,27 @@ export default function RegisterPage() {
               </div>
               {errors.password && (
                 <p className="text-red-500 text-sm mt-1">{errors.password}</p>
+              )}
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium mb-2">Role</label>
+              <select
+                value={formData.role}
+                onChange={(e) =>
+                  setFormData({ ...formData, role: e.target.value })
+                }
+                className="select select-bordered w-full"
+              >
+                <option value="" disabled>
+                  Select a role
+                </option>
+                <option value="user">User</option>
+                <option value="admin">Admin</option>
+                <option value="librarian">Librarian</option>
+              </select>
+              {errors.role && (
+                <p className="text-red-500 text-sm mt-1">{errors.role}</p>
               )}
             </div>
 

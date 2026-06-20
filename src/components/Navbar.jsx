@@ -4,18 +4,22 @@ import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  BookOpen, ShoppingCart, Search, Sun, Moon, Menu, X, ChevronDown,
+  BookOpen,
+  ShoppingCart,
+  Search,
+  Sun,
+  Moon,
+  Menu,
+  X,
+  ChevronDown,
 } from "lucide-react";
 import { toast } from "react-toastify";
+import { authClient } from "@/app/(auth)/lib/auth-client";
 
 const navLinks = [
-  { label: "Home", href: "#", active: true },
-  { label: "About", href: "#about" },
-  { label: "Shop", href: "#shop" },
-  { label: "Pricing", href: "#pricing" },
-  { label: "Pages", href: "#", dropdown: ["Authors", "Blog Posts", "Events", "Press"] },
-  { label: "Blog", href: "#blog" },
-  { label: "Contact", href: "#contact" },
+  { label: "Home", href: "/", active: true },
+  { label: "Dashboard", href: "/dashboard" },
+  { label: "Registration", href: "/registration" },
 ];
 
 export default function Navbar() {
@@ -25,6 +29,8 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [pagesOpen, setPagesOpen] = useState(false);
   const cartCount = 3;
+
+  const {data:user,isPending:loading, error} = authClient.useSession()
 
   useEffect(() => {
     setMounted(true);
@@ -47,8 +53,8 @@ export default function Navbar() {
   return (
     <header
       className={`sticky top-0 z-50 w-full transition-all duration-300 ${
-        scrolled 
-          ? "shadow-xl backdrop-blur-lg bg-base-100/95 border-b border-base-200" 
+        scrolled
+          ? "shadow-xl backdrop-blur-lg bg-base-100/95 border-b border-base-200"
           : "bg-base-100"
       }`}
     >
@@ -56,7 +62,11 @@ export default function Navbar() {
         {/* Logo */}
         <a href="#" className="flex items-center gap-2 flex-shrink-0 group">
           <div className="w-8 h-8 bg-primary rounded-md flex items-center justify-center shadow group-hover:scale-105 transition-transform duration-200">
-            <BookOpen size={17} className="text-primary-content" strokeWidth={2.5} />
+            <BookOpen
+              size={17}
+              className="text-primary-content"
+              strokeWidth={2.5}
+            />
           </div>
           <span
             className="text-xl font-bold text-base-content"
@@ -76,9 +86,9 @@ export default function Navbar() {
                   className="flex items-center gap-1 px-4 py-2 rounded-lg text-sm font-medium text-base-content hover:text-primary hover:bg-base-200/80 transition-all"
                 >
                   {link.label}
-                  <ChevronDown 
-                    size={14} 
-                    className={`transition-transform duration-200 ${pagesOpen ? "rotate-180" : ""}`} 
+                  <ChevronDown
+                    size={14}
+                    className={`transition-transform duration-200 ${pagesOpen ? "rotate-180" : ""}`}
                   />
                 </button>
 
@@ -118,15 +128,25 @@ export default function Navbar() {
                   {link.label}
                 </a>
               </li>
-            )
+            ),
           )}
+          <li key={loading ? 'loading..' : `${user ? 'LogOut' : 'Login'}`}>
+            <a
+              href={`${user ? '/logout' : '/login'}`}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-all text-base-content hover:text-primary hover:bg-base-200`}
+            >
+              {loading ? 'loading..' : `${user ? 'LogOut' : 'Login'}`}
+            </a>
+          </li>
         </ul>
 
         {/* Right actions */}
         <div className="flex items-center gap-2">
           {/* Search */}
           <button
-            onClick={() => toast.info("Search coming soon!", { autoClose: 2000 })}
+            onClick={() =>
+              toast.info("Search coming soon!", { autoClose: 2000 })
+            }
             className="hidden sm:flex w-10 h-10 items-center justify-center rounded-xl text-base-content hover:text-primary hover:bg-base-200 transition-all"
             aria-label="Search"
           >
@@ -156,7 +176,11 @@ export default function Navbar() {
 
           {/* Cart */}
           <button
-            onClick={() => toast.success(`You have ${cartCount} items in your cart`, { autoClose: 2200 })}
+            onClick={() =>
+              toast.success(`You have ${cartCount} items in your cart`, {
+                autoClose: 2200,
+              })
+            }
             className="relative flex items-center justify-center w-10 h-10 bg-primary text-primary-content rounded-xl hover:brightness-110 active:scale-95 transition-all shadow"
             aria-label="View cart"
           >
