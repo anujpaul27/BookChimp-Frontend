@@ -1,3 +1,4 @@
+import Navbar from "@/components/Navbar";
 import "./globals.css";
 import Providers from "./providers";
 import { ToastContainer } from "react-toastify";
@@ -13,6 +14,7 @@ export default function RootLayout({ children }) {
     <html lang="en" suppressHydrationWarning>
       <body style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
         <Providers>
+          <Navbar/>
           {children}
           <ToastContainer
             position="bottom-right"

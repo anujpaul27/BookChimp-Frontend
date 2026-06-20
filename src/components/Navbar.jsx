@@ -16,12 +16,6 @@ import {
 import { toast } from "react-toastify";
 import { authClient } from "@/app/(auth)/lib/auth-client";
 
-const navLinks = [
-  { label: "Home", href: "/", active: true },
-  { label: "Dashboard", href: "/dashboard" },
-  { label: "Registration", href: "/registration" },
-];
-
 export default function Navbar() {
   const { theme, setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
@@ -30,7 +24,13 @@ export default function Navbar() {
   const [pagesOpen, setPagesOpen] = useState(false);
   const cartCount = 3;
 
-  const {data:user,isPending:loading, error} = authClient.useSession()
+  const { data: user, isPending: loading, error } = authClient.useSession();
+
+  const navLinks = [
+    { label: "Home", href: "/", active: true },
+    { label: "Dashboard", href: `/dashboard/${user?.user?.role}` },
+    { label: "Registration", href: "/registration" },
+  ];
 
   useEffect(() => {
     setMounted(true);
@@ -130,12 +130,12 @@ export default function Navbar() {
               </li>
             ),
           )}
-          <li key={loading ? 'loading..' : `${user ? 'LogOut' : 'Login'}`}>
+          <li key={loading ? "loading.." : `${user ? "LogOut" : "Login"}`}>
             <a
-              href={`${user ? '/logout' : '/login'}`}
+              href={`${user ? "/logout" : "/login"}`}
               className={`px-4 py-2 rounded-lg text-sm font-medium transition-all text-base-content hover:text-primary hover:bg-base-200`}
             >
-              {loading ? 'loading..' : `${user ? 'LogOut' : 'Login'}`}
+              {loading ? "loading.." : `${user ? "LogOut" : "Login"}`}
             </a>
           </li>
         </ul>
@@ -235,6 +235,15 @@ export default function Navbar() {
                   {link.label}
                 </a>
               ))}
+
+              <a
+                key={loading ? "loading.." : `${user ? "LogOut" : "Login"}`}
+                href={`${user ? "/logout" : "/login"}`}
+                onClick={() => setMobileOpen(false)}
+                className={`px-5 py-3.5 rounded-xl text-[15px] font-medium transition-all text-base-content hover:bg-base-200 `}
+              >
+                {loading ? "loading.." : `${user ? "LogOut" : "Login"}`}
+              </a>
             </div>
           </motion.div>
         )}

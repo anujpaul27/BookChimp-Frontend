@@ -1,5 +1,4 @@
 "use client";
-import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import TrustBadges from "@/components/TrustBadges";
 import CategoriesSection from "@/components/CategoriesSection";
@@ -12,7 +11,6 @@ import Footer from "@/components/Footer";
 export default function Home() {
   return (
     <main className="min-h-screen bg-base-100">
-      <Navbar />
       <HeroSection />
       <TrustBadges />
       <CategoriesSection />
