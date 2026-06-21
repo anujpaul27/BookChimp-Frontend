@@ -4,17 +4,8 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
-  Home,
-  Briefcase,
-  Heart,
-  FileText,
-  CreditCard,
-  Settings,
   LogOut,
-  User,
   Users,
-  ChartBar,
-  Building2,
   LayoutDashboard,
   Package,
   BookOpen,
@@ -25,6 +16,7 @@ import {
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { authClient } from "../(auth)/lib/auth-client";
+import Image from "next/image";
 
 const user = [
   { label: "Overview", href: "/dashboard/user", icon: LayoutDashboard },
@@ -86,7 +78,6 @@ export default function SeekerLayout({ children }) {
 
   // 1. Fetch session from Better Auth
   const { data: session, isPending } = authClient.useSession();
-
   // 2. Determine role dynamically
   const role = session?.user?.role || "user"; // Ensure 'role' is in your user schema
 
@@ -147,12 +138,17 @@ export default function SeekerLayout({ children }) {
           <div className="flex items-center gap-4">
             <div className="avatar">
               <div className="w-9 h-9 rounded-full">
-                <img src="https://i.pravatar.cc/150?u=seeker" alt="Profile" />
+                <Image
+                src={session?.user?.image}
+                alt="user profile"
+                width={34}
+                height={34}
+                loading="lazy"
+                />
               </div>
             </div>
             <div>
-              <p className="font-medium">Alex Rahman</p>
-              <p className="text-xs text-base-content/60">Premium Seeker</p>
+              <p className="font-medium">{session?.user?.name}</p>
             </div>
           </div>
         </header>
