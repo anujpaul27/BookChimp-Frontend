@@ -46,12 +46,12 @@ export default function AdminDashboard() {
             transition={{ delay: i * 0.1 }}
             className="bg-base-200 rounded-2xl p-6 border border-base-300 flex items-center gap-5"
           >
-            <div className={`w-14 h-14 rounded-2xl bg-base-100 flex items-center justify-center ${stat.color}`}>
-              <stat.icon size={28} />
+            <div className={`w-12 h-12 rounded-2xl bg-base-100 flex items-center justify-center ${stat.color}`}>
+              <stat.icon size={20} />
             </div>
             <div>
-              <p className="text-3xl font-bold">{stat.value}</p>
-              <p className="text-sm text-base-content/70">{stat.title}</p>
+              <p className="text-xl font-bold">{stat.value}</p>
+              <p className="text-xs text-base-content/70">{stat.title}</p>
             </div>
           </motion.div>
         ))}

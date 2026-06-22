@@ -58,19 +58,11 @@ const librarian = [
 
 const admin = [
   { label: "Overview", href: "/dashboard/admin", icon: LayoutDashboard },
-  {
-    label: "Approval Queue",
-    href: "/dashboard/admin-queue",
-    icon: ShieldCheck,
-  },
-  { label: "Manage Users", href: "/dashboard/admin-users", icon: Users },
-  { label: "All Books", href: "/dashboard/admin-books", icon: BookOpen },
-  {
-    label: "Transactions",
-    href: "/dashboard/admin-transactions",
-    icon: BarChart2,
-  },
-];
+  { label: "Approval Queue", href: "/dashboard/admin/approval-queue", icon: ShieldCheck },
+  { label: "Manage Users", href: "/dashboard/admin/manage-users", icon: Users },
+  { label: "Manage All Books", href: "/dashboard/admin/manage-books", icon: BookOpen },
+  { label: "Transactions", href: "/dashboard/admin/transactions", icon: BarChart2 },
+]
 
 export default function SeekerLayout({ children }) {
   const pathname = usePathname();
@@ -95,17 +87,16 @@ export default function SeekerLayout({ children }) {
     <div className="min-h-screen bg-base-200 flex">
       {/* Sidebar */}
       <div
-        className={`${sidebarOpen ? "w-72" : "w-20"} bg-base-100 border-r border-base-300 transition-all duration-300`}
+        className={`${sidebarOpen ? "w-60" : "w-20"} bg-base-100 border-r border-base-300 transition-all duration-300`}
       >
         <nav className="p-4">
-          {}
           {isPending ? (
             <div className="mx-auto my-auto ">Loading...</div>
           ) : (
             navItems.map((item) => {
               const isActive = pathname === item.href;
               return (
-                <Link
+                <Link 
                   key={item.href}
                   href={item.href}
                   className={`flex items-center gap-3 px-4 py-3 rounded-xl mb-1 transition-all ${isActive ? "bg-primary text-white" : "hover:bg-base-200"}`}
@@ -118,12 +109,7 @@ export default function SeekerLayout({ children }) {
           )}
         </nav>
 
-        <div className="absolute bottom-6 left-4 right-4">
-          <button className="flex items-center gap-3 text-red-500 hover:bg-base-200 w-full px-4 py-3 rounded-xl">
-            <LogOut size={20} />
-            {sidebarOpen && "Logout"}
-          </button>
-        </div>
+        
       </div>
 
       {/* Main Content */}
