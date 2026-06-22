@@ -24,8 +24,6 @@ export default function ApprovalQueue({ pendingBooks }) {
     fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/book/book-delete/${id}`,{
         method: 'delete'
     })
-    .then(res=> res.json())
-    .then(data=> console.log(data))
     toast.error("Book deleted");
   };
 
