@@ -8,7 +8,6 @@ const page = async () => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/book/library-book/${userId}`)
   const data = await res.json()
   const initialBooks = data.data
-  console.log(initialBooks);
 
   return (
     <div>

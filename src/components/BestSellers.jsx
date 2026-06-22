@@ -1,18 +1,31 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { toast } from "react-toastify";
 import BookCard from "./BookCard";
-
-const bestSellers = [
-  { id: 1, title: "The Boy in The Book", author: "J. Morrison", price: "$10", rating: 4 },
-  { id: 2, title: "Story Of Legend", author: "K. Thompson", price: "$10", rating: 4 },
-  { id: 3, title: "Charlotte's Web", author: "E.B. White", price: "$10", rating: 5 },
-  { id: 4, title: "Doctor Who", author: "R. Davies", price: "$10", rating: 4 },
-  { id: 5, title: "Sweet Water", author: "M. Garcia", price: "$10", rating: 5 },
-];
+import { getData } from "./lib/getData";
 
 export default function BestSellers() {
+  const [allBooks, setAllBooks] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchBooks = async () => {
+      try {
+        const response = await getData('book/all-book');
+        setAllBooks(response?.data || response || []); 
+      } catch (error) {
+        console.error("Failed to fetch books:", error);
+        toast.error("Failed to fetch books");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchBooks();
+  }, []);
+
   return (
     <section className="py-14 bg-base-100" id="bestsellers">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
@@ -37,12 +50,21 @@ export default function BestSellers() {
           </button>
         </motion.div>
 
-        {/* Book grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5">
-          {bestSellers.map((book, i) => (
-            <BookCard key={book.id} book={book} coverIdx={i} index={i} />
-          ))}
-        </div>
+        {loading ? (
+          <div className="text-center py-10">Loading books...</div>
+        ) : (
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5">
+            {allBooks.length > 0 ? (
+              allBooks.map((book, i) => {
+                if (i === 4) return 
+                return <BookCard key={book.id || book._id} book={book} coverIdx={i} index={i} />
+                
+              })
+            ) : (
+              <div className="col-span-full text-center text-gray-500">Not Found books</div>
+            )}
+          </div>
+        )}
       </div>
     </section>
   );

@@ -17,7 +17,10 @@ export default function ManageInventory({initialBooks}) {
   };
 
   const deleteBook = (id) => {
-    setBooks(books.filter(b => b.id !== id));
+    setBooks(books.filter(b => b._id !== id));
+    fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/book/book-delete/${id}`,{
+        method: 'delete'
+    })
     toast.error("Book deleted");
   };
 
@@ -38,7 +41,7 @@ export default function ManageInventory({initialBooks}) {
           </thead>
           <tbody>
             {books.map((book) => (
-              <tr key={book.id} className="border-b border-base-300 hover:bg-base-100">
+              <tr key={book._id} className="border-b border-base-300 hover:bg-base-100">
                 <td className="font-medium">{book.title}</td>
                 <td>{book.author}</td>
                 <td>${book.price}</td>
@@ -62,7 +65,7 @@ export default function ManageInventory({initialBooks}) {
                       </button>
                     )}
                     <button 
-                      onClick={() => deleteBook(book.id)}
+                      onClick={() => deleteBook(book._id)}
                       className="btn btn-ghost btn-sm text-error"
                     >
                       <Trash2 size={18} />
