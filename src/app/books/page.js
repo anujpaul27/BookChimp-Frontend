@@ -3,9 +3,8 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { toast } from "react-toastify";
-import BookCard from "./BookCard";
-import { getData } from "./lib/getData";
-import Link from "next/link";
+import { getData } from "@/components/lib/getData";
+import BookCard from "@/components/BookCard";
 
 export default function BestSellers() {
   const [allBooks, setAllBooks] = useState([]);
@@ -41,14 +40,9 @@ export default function BestSellers() {
             className="text-2xl sm:text-3xl font-bold text-base-content"
             style={{ fontFamily: "'Playfair Display', serif" }}
           >
-            Best seller of the week
+            Best book choice for you 
           </h2>
-          <Link href={'/books'}
-            onClick={() => toast.info("Viewing all best sellers!", { autoClose: 1800 })}
-            className="btn btn-primary btn-sm px-5 h-9 min-h-0 rounded-lg text-xs font-semibold tracking-wider"
-          >
-            VIEW ALL
-          </Link>
+          
         </motion.div>
 
         {loading ? (
@@ -57,7 +51,6 @@ export default function BestSellers() {
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5">
             {allBooks.length > 0 ? (
               allBooks.map((book, i) => {
-                if (i === 4) return 
                 return <BookCard key={book.id || book._id} book={book} coverIdx={i} index={i} />
                 
               })
