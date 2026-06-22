@@ -139,7 +139,7 @@ export default function SeekerLayout({ children }) {
             <div className="avatar">
               <div className="w-9 h-9 rounded-full">
                 <Image
-                src={session?.user?.image}
+                src={session?.user?.image || '/avatar.png'}
                 alt="user profile"
                 width={34}
                 height={34}

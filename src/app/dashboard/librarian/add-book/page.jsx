@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { BookOpen, Upload, Loader2 } from "lucide-react";
 import { toast } from "react-toastify";
 import { uploadToImageBB } from "@/components/api/uploadImage";
+import { useUserClient } from "@/components/lib/getSession";
 
 export default function AddBook() {
   const [loading, setLoading] = useState(false);
@@ -20,6 +21,8 @@ export default function AddBook() {
     category: "",
     status: "Pending",
   });
+
+  const userId = useUserClient()
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -37,9 +40,9 @@ export default function AddBook() {
       const bookData = {
           ...formData,
           image: imageUrl,
+          librarianId : userId,
         };
 
-      console.log(bookData);
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_SERVER_URL}/book/create`,
         {
@@ -64,15 +67,15 @@ export default function AddBook() {
     }
 
     // Reset form
-    // setFormData({
-    //   title: "",
-    //   author: "",
-    //   description: "",
-    //   price: "",
-    //   category: "",
-    //   image: null,
-    // });
-    // setImagePreview(null);
+    setFormData({
+      title: "",
+      author: "",
+      description: "",
+      price: "",
+      category: "",
+    });
+    setImagePreview(null);
+    setImages(null)
   };
 
   const handleImageChange = (e) => {
