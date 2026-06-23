@@ -40,7 +40,7 @@ export default function ManageInventory({initialBooks}) {
             </tr>
           </thead>
           <tbody>
-            {books.map((book) => (
+            {books?.map((book) => (
               <tr key={book._id} className="border-b border-base-300 hover:bg-base-100">
                 <td className="font-medium">{book.title}</td>
                 <td>{book.author}</td>

@@ -4,27 +4,46 @@ import { useState } from "react";
 import { CheckCircle, Trash2 } from "lucide-react";
 import { toast } from "react-toastify";
 import Link from "next/link";
+import { UpdateOrDelete } from "@/components/lib/getData";
 
 export default function ApprovalQueue({ pendingBooks }) {
   const [books, setBooks] = useState(pendingBooks);
+  const [loadingDelBtn, setLoadingDelBtn] = useState(false)
+  const [loadingUpBtn, setLoadingUpBtn] = useState(false)
 
-  const approveBook = (id) => {
-    setBooks(books.filter((b) => b._id !== id));
-    fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/book/update-book/${id}`, {
-      method: "PATCH",
-    })
-      .then((res) => res.json())
-      .then((data) => console.log(data));
-    toast.success("Book approved and published!");
+  const approveBook = async (id) => {
+    setLoadingUpBtn(true)
+    try 
+    {
+      const res = await UpdateOrDelete(`/book/update-book/${id}`,"PATCH")
+      if (res)
+      {
+        setBooks(books.filter((b) => b._id !== id));
+        toast.success("Book approved and published!");
+      }
+      else 
+      {
+        toast.error("Book delete failed!.");
+      }
+    }
+    finally {
+      setLoadingUpBtn(false)
+    }
   };
 
-  const deleteBook = (id) => {
-    setBooks(books.filter((b) => b._id !== id));
-    // filter and delete book with id 
-    fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/book/book-delete/${id}`,{
-        method: 'delete'
-    })
-    toast.error("Book deleted");
+  const deleteBook = async (id) => {
+    setLoadingDelBtn(true)
+    try {
+      const res = await UpdateOrDelete(`/book/book-delete/${id}`, "DELETE");
+      if (res) {
+        setBooks(books.filter((b) => b._id !== id));
+        toast.error("Book deleted");
+      } else {
+        toast.error("Book delete failed!.");
+      }
+    } finally {
+      setLoadingDelBtn(false)
+    }
   };
 
   return (
@@ -42,11 +61,10 @@ export default function ApprovalQueue({ pendingBooks }) {
           </thead>
           <tbody>
             {books.map((book) => (
-            
               <tr
                 key={book.id}
                 className="border-b border-base-300 hover:bg-base-100"
-                onClick={console.log('clicked')}
+                onClick={console.log("clicked")}
               >
                 <td className="font-medium">{book.title}</td>
                 <td>{book.author}</td>
@@ -54,12 +72,14 @@ export default function ApprovalQueue({ pendingBooks }) {
                 <td>
                   <div className="flex gap-3">
                     <button
+                      disabled={loadingUpBtn}
                       onClick={() => approveBook(book._id)}
                       className="btn btn-success btn-sm"
                     >
                       <CheckCircle size={18} /> Approve & Publish
                     </button>
                     <button
+                    disabled={loadingDelBtn}
                       onClick={() => deleteBook(book._id)}
                       className="btn btn-error btn-sm"
                     >
@@ -68,7 +88,6 @@ export default function ApprovalQueue({ pendingBooks }) {
                   </div>
                 </td>
               </tr>
-              
             ))}
           </tbody>
         </table>

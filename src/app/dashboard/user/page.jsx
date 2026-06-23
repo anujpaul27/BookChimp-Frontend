@@ -1,6 +1,6 @@
-import { getUserServerSession } from "@/components/lib/getSession";
 import { redirect } from "next/navigation";
 import UserDashboard from "./userDashboard";
+import { getUserServerSession } from "@/components/lib/getSessionServer";
 
 
 const page = async () => {  

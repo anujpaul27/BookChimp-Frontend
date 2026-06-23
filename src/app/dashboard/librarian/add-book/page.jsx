@@ -53,12 +53,14 @@ export default function AddBook() {
           body: JSON.stringify(bookData),
         },
       );
-
       const books = await res.json();
-      console.log(res);
       if (res.ok) {
         console.log(books.data);
         toast.success("Book submitted for approval! ✅");
+      }
+      else 
+      {
+        toast.error(`failed submit book!..`);
       }
     } catch (err) {
       console.log(err.message);
