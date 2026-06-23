@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { toast } from "react-toastify";
 import { authClient } from "@/app/(auth)/lib/auth-client";
+import Link from "next/link";
 
 export default function Navbar() {
   const { theme, setTheme, resolvedTheme } = useTheme();
@@ -28,7 +29,7 @@ export default function Navbar() {
 
   const navLinks = [
     { label: "Home", href: "/", active: true },
-    { label: "Dashboard", href: `/dashboard/${user?.user?.role}` },
+    { label: "Dashboard", href: `${user ? `/dashboard/${user?.user?.role}` : '/login'}` },
     { label: "All Books", href: "/books" },
   ];
 
@@ -60,7 +61,7 @@ export default function Navbar() {
     >
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
         {/* Logo */}
-        <a href="#" className="flex items-center gap-2 flex-shrink-0 group">
+        <Link href="/" className="flex items-center gap-2 flex-shrink-0 group">
           <div className="w-8 h-8 bg-primary rounded-md flex items-center justify-center shadow group-hover:scale-105 transition-transform duration-200">
             <BookOpen
               size={17}
@@ -74,7 +75,7 @@ export default function Navbar() {
           >
             BookChimp
           </span>
-        </a>
+        </Link>
 
         {/* Desktop nav */}
         <ul className="hidden lg:flex items-center gap-0.5 flex-1 justify-center">

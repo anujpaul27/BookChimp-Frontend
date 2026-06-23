@@ -1,7 +1,9 @@
 "use client";
 
+import { authClient } from "@/app/(auth)/lib/auth-client";
 import { motion } from "framer-motion";
 import { BookOpen, DollarSign, Clock, TrendingUp } from "lucide-react";
+import { redirect } from "next/navigation";
 import {
   LineChart,
   Line,

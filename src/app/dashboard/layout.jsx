@@ -71,7 +71,7 @@ export default function SeekerLayout({ children }) {
   // 1. Fetch session from Better Auth
   const { data: session, isPending } = authClient.useSession();
   // 2. Determine role dynamically
-  const role = session?.user?.role || "user"; // Ensure 'role' is in your user schema
+  const role = session?.user?.role; 
 
   // 3. Select items based on role (default to empty or a loader)
   const navItems =

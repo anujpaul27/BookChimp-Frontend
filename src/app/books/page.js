@@ -21,7 +21,7 @@ export default function BestSellers() {
         const response = await getData('book/all-book/without/pending/unpublish');
         const books = response?.data || response || [];
         setAllBooks(books);
-      } catch (error) {
+      } catch (error) { 
         console.error("Failed to fetch books:", error);
         toast.error("Failed to fetch books");
       } finally {
