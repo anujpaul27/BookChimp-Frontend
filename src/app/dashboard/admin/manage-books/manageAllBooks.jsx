@@ -3,25 +3,50 @@
 import { useState } from "react";
 import { Trash2, EyeOff } from "lucide-react";
 import { toast } from "react-toastify";
+import { UpdateOrDelete } from "@/components/lib/getData";
 
 
 export default function ManageAllBooks({allBooks}) {
   const [books, setBooks] = useState(allBooks);
 
   const unpublish = (id) => {
-    setBooks(books.map(b => b._id === id ? { ...b, status: "Unpublish" } : b));
-    fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/book/unpublish-book/${id}`, {
-      method: "PATCH",
-    })
-    toast.success("Book unpublished");
+    try 
+    {
+      const res = UpdateOrDelete(`/book/unpublish-book/${id}`,"PATCH")
+      if (res)
+      {
+        setBooks(books.map(b => b._id === id ? { ...b, status: "Unpublish" } : b));
+        toast.success("Book unpublished successful.");
+      }
+      else 
+      {
+        toast.error("Book unpublished failed!.");
+      }
+    }
+    catch (err)
+    {
+      console.log(err.message );
+    }
   };
 
   const deleteBook = (id) => {
-    setBooks(books.filter(b => b._id !== id));
-    fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/book/book-delete/${id}`,{
-        method: 'delete'
-    })
-    toast.error("Book permanently deleted");
+    try
+    {
+      const res = UpdateOrDelete(`/book/book-delete/${id}`,'delete')
+      if (res)
+      {
+        setBooks(books.filter(b => b._id !== id));
+        toast.error("Book permanently deleted");
+      }
+      else 
+      {
+        toast.error("Book delete failed!.");
+      }
+    }
+    catch (err)
+    {
+      console.log(err.message);
+    }
   };
 
   return (

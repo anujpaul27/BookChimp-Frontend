@@ -5,6 +5,7 @@ import ApprovalQueue from './approvalPage';
 const page =async  () => {
 
   const books = await getData('book/get-pending-book')
+  console.log(books);
 
   return (
     <div>
