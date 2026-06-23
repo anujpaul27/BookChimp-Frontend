@@ -3,8 +3,7 @@ import ManageAllBooks from './manageAllBooks';
 import { getData } from '@/components/lib/getData';
 
 const page =async () => {
-  const books = await getData(`book/all-book`)
-  console.log(books);
+  const books = await getData(`book/all-book`);
   return (
     <div>
       <ManageAllBooks allBooks={books}/>

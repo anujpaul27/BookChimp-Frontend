@@ -13,8 +13,6 @@ export default function ManageAllBooks({allBooks}) {
     fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/book/unpublish-book/${id}`, {
       method: "PATCH",
     })
-      .then((res) => res.json())
-      .then((data) => console.log(data));
     toast.success("Book unpublished");
   };
 
@@ -41,7 +39,7 @@ export default function ManageAllBooks({allBooks}) {
           </thead>
           <tbody>
             {books.map((book) => (
-              <tr key={book.id} className="border-b border-base-300 hover:bg-base-100">
+              <tr key={book._id} className="border-b border-base-300 hover:bg-base-100">
                 <td className="font-medium">{book.title}</td>
                 <td>{book.author}</td>
                 <td>

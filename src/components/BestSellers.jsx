@@ -14,7 +14,7 @@ export default function BestSellers() {
   useEffect(() => {
     const fetchBooks = async () => {
       try {
-        const response = await getData('book/all-book');
+        const response = await getData('book/all-book/without/pending/unpublish');
         setAllBooks(response?.data || response || []); 
       } catch (error) {
         console.error("Failed to fetch books:", error);
