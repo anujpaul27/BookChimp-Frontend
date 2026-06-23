@@ -1,6 +1,6 @@
 import { auth } from "@/app/(auth)/lib/auth";
+import { authClient } from "@/app/(auth)/lib/auth-client";
 import { headers } from "next/headers";
-
 
 export const GetAllUser = async () => {
   const usersData = await auth.api.listUsers({
@@ -8,8 +8,11 @@ export const GetAllUser = async () => {
       limit: 50, // Defaults to 100 rows
       offset: 0, // For pagination
     },
-    headers: await headers()
+    headers: await headers(),
   });
 
   return usersData.users;
 };
+
+
+

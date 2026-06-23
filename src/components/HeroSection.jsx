@@ -4,32 +4,33 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, ChevronLeft, ChevronRight, BookOpen } from "lucide-react";
 import { toast } from "react-toastify";
+import Link from "next/link";
 
 const slides = [
   {
     id: 1,
-    image: "https://images.unsplash.com/photo-1507842217343-583bb7270b66?q=80&w=2070",
+    image: "/hero-image/image5.jpg",
     title: "Lost in the Pages",
     subtitle: "Discover timeless stories in our vast collection",
     highlight: "Library of Dreams",
   },
   {
     id: 2,
-    image: "https://unsplash.com/photos/girl-sitting-while-reading-book-p_KJvKVsH14",
+    image: "/hero-image/image2.jpg",
     title: "Cozy Reading Nook",
     subtitle: "Where every book feels like home",
     highlight: "Warm & Inviting",
   },
   {
     id: 3,
-    image: "https://unsplash.com/photos/woman-reading-book-LZ_mMKDiD7M",
+    image: "/hero-image/image3.jpg",
     title: "Endless Knowledge",
     subtitle: "Thousands of books waiting to be explored",
     highlight: "Your Next Adventure",
   },
   {
     id: 4,
-    image: "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?q=80&w=2070",
+    image: "/hero-image/image4.jpg",
     title: "The Reading Haven",
     subtitle: "Peaceful moments with your favourite stories",
     highlight: "Quiet Luxury",
@@ -115,7 +116,7 @@ export default function HeroBanner() {
             >
               <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 mb-6">
                 <BookOpen className="w-5 h-5 text-amber-300" />
-                <span className="text-sm font-medium text-white tracking-widest">EST. 2024 • CURATED COLLECTION</span>
+                <span className="text-xs font-medium text-white tracking-widest">EST. 2024 • CURATED COLLECTION</span>
               </div>
             </motion.div>
 
@@ -123,7 +124,7 @@ export default function HeroBanner() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.1 }}
-              className="text-6xl sm:text-7xl lg:text-8xl font-bold leading-none text-white mb-6 tracking-tighter"
+              className="text-2xl sm:text-3xl lg:text-7xl font-bold leading-none text-white mb-6 tracking-tighter"
               style={{ fontFamily: "'Playfair Display', serif" }}
             >
               {slides[currentSlide].title}
@@ -133,7 +134,7 @@ export default function HeroBanner() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.2 }}
-              className="text-2xl text-white/90 mb-8 max-w-lg"
+              className="text-md text-white/90 mb-8 max-w-lg"
             >
               {slides[currentSlide].subtitle}
             </motion.p>
@@ -144,20 +145,16 @@ export default function HeroBanner() {
               transition={{ duration: 0.7, delay: 0.3 }}
               className="flex flex-wrap gap-4"
             >
-              <button
+              <Link
+              href={'/books'}
                 onClick={handleShop}
-                className="btn btn-primary px-10 py-4 rounded-2xl text-lg font-semibold flex items-center gap-3 hover:scale-105 transition-transform shadow-xl"
+                className="btn btn-primary px-10 py-4 rounded-2xl text-sm font-semibold flex items-center gap-3 hover:scale-105 transition-transform shadow-xl"
               >
                 EXPLORE COLLECTION
                 <ArrowRight size={22} />
-              </button>
+              </Link>
 
-              <button
-                onClick={() => toast.info("Join our reading community ✨")}
-                className="btn btn-ghost border border-white/40 text-white hover:bg-white/10 px-8 py-4 rounded-2xl text-lg font-medium"
-              >
-                JOIN THE CLUB
-              </button>
+              
             </motion.div>
 
             {/* Highlight Tag */}
