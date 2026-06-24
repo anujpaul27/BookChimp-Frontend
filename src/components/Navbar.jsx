@@ -176,7 +176,7 @@ export default function Navbar() {
           )}
 
           {/* Cart */}
-          <button
+          <Link href={'/cart'}
             onClick={() =>
               toast.success(`You have ${cartCount} items in your cart`, {
                 autoClose: 2200,
@@ -189,7 +189,7 @@ export default function Navbar() {
             <span className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-secondary text-secondary-content text-[10px] font-bold rounded-full flex items-center justify-center">
               {cartCount}
             </span>
-          </button>
+          </Link >
 
           {/* Mobile Menu */}
           <button

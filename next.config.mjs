@@ -5,8 +5,8 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: 'i.ibb.co', // ImgBB's standard CDN domain architecture
+        protocol: "https",
+        hostname: "i.ibb.co",
       },
     ],
   },

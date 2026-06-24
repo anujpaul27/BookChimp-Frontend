@@ -3,9 +3,11 @@
 import { motion } from "framer-motion";
 import { ShoppingCart, Heart, Star, InfoIcon } from "lucide-react";
 import { toast } from "react-toastify";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { addToCart } from "./lib/addToCart";
+import { authClient } from "@/app/(auth)/lib/auth-client";
 
 // Generate a deterministic "cover" based on book id
 const coverThemes = [
@@ -67,24 +69,23 @@ function BookCoverArt({ book, coverIdx }) {
 }
 
 export default function BookCard({ book, coverIdx = 0, index = 0 }) {
-  const [wishlisted, setWishlisted] = useState(false);
+  const { data, isPending, error } = authClient.useSession();
+  const id = data?.user?.id;
 
-  const handleAddToCart = (e) => {
+  const handleAddToCart = async (e) => {
     e.stopPropagation();
-    toast.success(`"${book.title}" added to cart!`, {
-      icon: "🛒",
-      autoClose: 2200,
-    });
-  };
 
-  const handleWishlist = (e) => {
-    e.stopPropagation();
-    setWishlisted((w) => !w);
-
-    toast.info(wishlisted ? "Removed from wishlist" : "Added to wishlist!", {
-      icon: wishlisted ? "💔" : "❤️",
-      autoClose: 1800,
-    });
+    const cartedBook = { ...book };
+    cartedBook.userId = id;
+    const res = await addToCart(cartedBook);
+    if (res) {
+      toast.success(`"${book.title}" added to cart!`, {
+        icon: "🛒",
+        autoClose: 2200,
+      });
+    } else {
+      toast.error("Add to cart failed!.");
+    }
   };
 
   return (
