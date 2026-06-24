@@ -1,3 +1,5 @@
+import { sendTokenClient } from "./getSession";
+
 const url = process.env.NEXT_PUBLIC_SERVER_URL;
 
 export const getData = async (api) => {
@@ -8,6 +10,7 @@ export const getData = async (api) => {
     const data = await res.json();
     return data.data;
   } else {
+    console.log(res.data.message);
     return null;
   }
 };
@@ -16,6 +19,7 @@ export const UpdateOrDelete = async (api, option) => {
   try {
     const response = await fetch(`${url}${api}`, {
       method: option,
+      headers: {authorization: 'Hello'}
     });
     return response.ok;
   } catch (err) {

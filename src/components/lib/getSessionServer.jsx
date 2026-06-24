@@ -40,5 +40,5 @@ export const sendToken = async () =>
         return null
     }
 
-    return {authorization: `Bearer ${userToken}`}
+    return {authorization: `${userToken}`}
 }
