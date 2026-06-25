@@ -16,7 +16,7 @@ const categories = [
 
 export default function CategoriesSection() {
   return (
-    <section className="py-16 bg-base-100" id="shop">
+    <section className="w-10/11 mx-auto py-16 bg-base-100" id="shop ">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         {/* Header */}
         <motion.div

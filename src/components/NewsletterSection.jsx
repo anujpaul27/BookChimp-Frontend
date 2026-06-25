@@ -46,7 +46,7 @@ export default function NewsletterSection() {
   };
 
   return (
-    <section className="py-6 bg-base-200/40">
+    <section className="w-10/11 mx-auto  py-6 bg-base-200/40">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

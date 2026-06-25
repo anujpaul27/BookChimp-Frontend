@@ -30,7 +30,7 @@ export default function Navbar() {
   const navLinks = [
     { label: "Home", href: "/", active: true },
     { label: "Dashboard", href: `${user ? `/dashboard/${user?.user?.role}` : '/login'}` },
-    { label: "All Books", href: "/books" },
+    { label: "Brows Books", href: "/books" },
   ];
 
   useEffect(() => {

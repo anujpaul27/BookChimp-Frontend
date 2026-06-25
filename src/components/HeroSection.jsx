@@ -124,7 +124,7 @@ export default function HeroBanner() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.1 }}
-              className="text-2xl sm:text-3xl lg:text-7xl font-bold leading-none text-white mb-6 tracking-tighter"
+              className="text-2xl sm:text-3xl lg:text-5xl font-bold leading-none text-white mb-6 tracking-tighter"
               style={{ fontFamily: "'Playfair Display', serif" }}
             >
               {slides[currentSlide].title}

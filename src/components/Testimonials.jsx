@@ -53,7 +53,7 @@ function StarRow({ count, max = 5 }) {
 
 export default function Testimonials() {
   return (
-    <section className="py-16 bg-base-100" id="reviews">
+    <section className="w-10/11 mx-auto py-16 bg-base-100" id="reviews">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         {/* Header */}
         <motion.div

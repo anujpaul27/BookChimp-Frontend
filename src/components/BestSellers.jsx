@@ -30,7 +30,7 @@ export default function BestSellers() {
   }, []);
 
   return (
-    <section className="py-14 bg-base-100" id="bestsellers">
+    <section className=" w-10/11 mx-auto  py-14 bg-base-100" id="bestsellers ">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         {/* Header */}
         <motion.div
