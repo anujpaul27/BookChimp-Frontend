@@ -11,6 +11,7 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
+  const [loadingGoogle, setLoadingGoogle] = useState(false)
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -57,6 +58,16 @@ export default function LoginPage() {
       setLoading(false);
     }
   };
+
+  const loginWithGoogle =async () =>
+  {
+    setLoadingGoogle(true)
+    const data = await authClient.signIn.social({
+      provider: "google"
+    })
+    setLoadingGoogle(false)
+    console.log(data);
+  }
 
   return (
     <div className="min-h-screen flex bg-white dark:bg-base-100">
@@ -160,7 +171,7 @@ export default function LoginPage() {
 
             <button
               type="button"
-              onClick={() => toast.info("Google Sign In - Coming Soon")}
+              onClick={loginWithGoogle}
               className="btn btn-outline w-full h-14 flex items-center justify-center gap-3 text-base"
             >
               <img
@@ -168,7 +179,16 @@ export default function LoginPage() {
                 alt="Google"
                 className="w-5 h-5"
               />
-              Continue with Google
+
+              {loadingGoogle ? (
+                <>
+                  <Loader2 className="animate-spin mr-3" size={24} />
+                  Signing In...
+                </>
+              ) : (
+                "Continue with Google"
+              )}
+              
             </button>
           </form>
 
