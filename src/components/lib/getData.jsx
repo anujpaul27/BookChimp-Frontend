@@ -1,10 +1,11 @@
-import { sendTokenClient } from "./getSession";
+import { sendUserTokenClient } from "./getSession";
 
 const url = process.env.NEXT_PUBLIC_SERVER_URL;
 
-export const getData = async (api) => {
+export const getData = async (api,token='') => {
+  console.log(token);
   const res = await fetch(`${url}/${api}`, {
-    headers: { authorization: "Hello token =" },
+    headers: { authorization: `${token}` },
   });
   if (res.ok) {
     const data = await res.json();

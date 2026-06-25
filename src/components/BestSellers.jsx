@@ -6,15 +6,17 @@ import { toast } from "react-toastify";
 import BookCard from "./BookCard";
 import { getData } from "./lib/getData";
 import Link from "next/link";
+import { getUserTokenClient } from "./lib/getSession";
 
 export default function BestSellers() {
   const [allBooks, setAllBooks] = useState([]);
   const [loading, setLoading] = useState(true);
+  const token = getUserTokenClient()
 
   useEffect(() => {
     const fetchBooks = async () => {
       try {
-        const response = await getData('book/all-book/without/pending/unpublish');
+        const response = await getData('book/all-book/without/pending/unpublish', token);
         setAllBooks(response?.data || response || []); 
       } catch (error) {
         console.error("Failed to fetch books:", error);

@@ -9,7 +9,7 @@ const page =async () => {
     const carts = await getData(`cart/all-carts/${userId}`)
     return (
         <div>
-            <CartPage carts={carts}/>
+            <CartPage carts={carts} userId={userId}/>
         </div>
     );
 };
