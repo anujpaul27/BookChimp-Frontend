@@ -9,12 +9,7 @@ import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip
 } from "recharts";
 
-const quickStats = [
-  { title: "Total Users", value: "2,847", icon: Users, color: "text-primary" },
-  { title: "Total Books", value: "1,394", icon: BookOpen, color: "text-success" },
-  { title: "Total Deliveries", value: "892", icon: Truck, color: "text-info" },
-  { title: "Total Revenue", value: "$48,291", icon: DollarSign, color: "text-warning" },
-];
+
 
 const categoryData = [
   { name: "Fiction", value: 45, color: "#C17D3C" },
@@ -30,7 +25,14 @@ const revenueTrend = [
   { month: "May", revenue: 7200 }, { month: "Jun", revenue: 8100 },
 ];
 
-export default function AdminDashboard() {
+export default function AdminDashboard({allUserLength,lengthOfBooks}) {
+
+  const quickStats = [
+  { title: "Total Users", value: allUserLength, icon: Users, color: "text-primary" },
+  { title: "Total Books", value: lengthOfBooks, icon: BookOpen, color: "text-success" },
+  { title: "Total Deliveries", value: "892", icon: Truck, color: "text-info" },
+  { title: "Total Revenue", value: "$48,291", icon: DollarSign, color: "text-warning" },
+];
 
   return (
     <div className="space-y-8">
