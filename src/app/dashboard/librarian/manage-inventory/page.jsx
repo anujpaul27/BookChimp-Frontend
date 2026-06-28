@@ -3,9 +3,10 @@ import React from "react";
 import ManageInventory from "./manageInventory";
 import { toast } from "react-toastify";
 
-const page = async () => {
+const managePage = async () => {
   const userId = await getUserServer();
   const token = await getUserToken();
+  
   let initialBooks = [];
   let errorMessage = "";
 
@@ -28,9 +29,10 @@ const page = async () => {
       <ManageInventory
         initialBooks={initialBooks}
         errorMessage={errorMessage}
+        token={token}
       />
     </div>
   );
 };
 
-export default page;
+export default managePage;

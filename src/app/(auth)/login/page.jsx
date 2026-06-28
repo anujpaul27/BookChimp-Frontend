@@ -70,7 +70,7 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex bg-white dark:bg-base-100">
+    <div className="min-h-screen flex bg-white dark:bg-base-100 w-10/12 mx-auto ">
       {/* Left Image - Same as Login */}
       <div className="flex-1 flex items-center justify-center p-6 lg:p-12">
         <motion.div

@@ -111,7 +111,7 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen flex">
+    <div className="min-h-screen flex w-10/12 gap-10  mx-auto ">
       {/* Left Side Image */}
       <div className="hidden lg:flex w-1/2 relative overflow-hidden">
         <Image

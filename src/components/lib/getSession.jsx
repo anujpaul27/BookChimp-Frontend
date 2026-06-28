@@ -10,7 +10,7 @@ export const getUserTokenClient = () =>
   const {data,isPending, error} = authClient.useSession()
   if (data?.session)
   {
-    return data.session.token
+    return data?.session?.token
   }
   else 
   {

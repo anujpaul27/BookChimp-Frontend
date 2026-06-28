@@ -32,7 +32,7 @@ const topRequested = [
   { title: "Dune Messiah", requests: 12 },
 ];
 
-export default function LibrarianDashboard({ totalBook }) {
+export default function LibrarianDashboard({ totalBook,pendingLength }) {
   const quickStats = [
     {
       title: "Total Books Listed",
@@ -48,7 +48,7 @@ export default function LibrarianDashboard({ totalBook }) {
     },
     {
       title: "Pending Requests",
-      value: "17",
+      value: pendingLength,
       icon: Clock,
       color: "text-warning",
     },
@@ -65,7 +65,7 @@ export default function LibrarianDashboard({ totalBook }) {
 
       {/* Quick Stats */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {quickStats.map((stat, i) => (
+        {quickStats?.map((stat, i) => (
           <motion.div
             key={i}
             initial={{ opacity: 0, y: 20 }}
@@ -74,13 +74,13 @@ export default function LibrarianDashboard({ totalBook }) {
             className="bg-base-200 rounded-2xl p-6 flex items-center gap-5 border border-base-300"
           >
             <div
-              className={`w-14 h-14 rounded-xl bg-base-100 flex items-center justify-center ${stat.color}`}
+              className={`w-14 h-14 rounded-xl bg-base-100 flex items-center justify-center ${stat?.color}`}
             >
               <stat.icon size={28} />
             </div>
             <div>
-              <p className="text-3xl font-bold">{stat.value}</p>
-              <p className="text-sm text-base-content/70">{stat.title}</p>
+              <p className="text-3xl font-bold">{stat?.value}</p>
+              <p className="text-sm text-base-content/70">{stat?.title}</p>
             </div>
           </motion.div>
         ))}

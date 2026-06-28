@@ -1,12 +1,16 @@
-import { getUserServer, getUserServerSession } from '@/components/lib/getSessionServer';
+import { getUserServer, getUserServerSession, getUserToken } from '@/components/lib/getSessionServer';
 import LibrarianDashboard from './LibrarianDashboard';
 import { getData } from '@/components/lib/getData';
 import { redirect } from 'next/navigation';
 
 const page = async () => {
   const userId = await getUserServer()
+  const token = await getUserToken();
+  console.log(userId);
 
-  const books = await getData(`book/library-book/${userId}`)
+  const books = await getData(`book/library-book/${userId}`,token)
+  const TotalPendingForThisLib = await getData(`book/get-pending-book/${userId}`,token)
+  const pendingLength = TotalPendingForThisLib.length
   
   const user = await getUserServerSession()
   if (!user)
@@ -20,7 +24,7 @@ const page = async () => {
 
   return (
     <div>
-      <LibrarianDashboard  totalBook={books.length} />
+      <LibrarianDashboard  totalBook={books.length} pendingLength={pendingLength}/>
     </div>
   );
 };

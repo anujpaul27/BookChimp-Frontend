@@ -13,7 +13,7 @@ export const getUserServer = async () => {
   }
 
   // 3. Return the user ID safely
-  return session.user.id;
+  return session?.user?.id || null;
 };
 
 export const getUserServerSession = async () => {

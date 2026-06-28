@@ -5,7 +5,7 @@ import { Edit3, Trash2, Eye } from "lucide-react";
 import { toast } from "react-toastify";
 import { UpdateOrDelete } from "@/components/lib/getData";
 
-export default function ManageInventory({ initialBooks, errorMessage }) {
+export default function ManageInventory({ initialBooks, errorMessage,token }) {
   const [books, setBooks] = useState(initialBooks);
 
   useEffect(() => {
@@ -27,7 +27,7 @@ export default function ManageInventory({ initialBooks, errorMessage }) {
 
   const deleteBook = async (id) => {
 
-    const res = await UpdateOrDelete(`/book/book-delete/${id}`,"delete")
+    const res = await UpdateOrDelete(`/book/book-delete/${id}`,"delete",token)
     if (res)
     {
       console.log(res);
