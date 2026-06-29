@@ -7,7 +7,6 @@ const client = new MongoClient(`${process.env.MONGODB_URI}`);
 const db = client.db("BookChimp");
 
 export const auth = betterAuth({
-  
   baseURL: process.env.BETTER_AUTH_URL,
   socialProviders: {
     google: {
@@ -33,9 +32,10 @@ export const auth = betterAuth({
   // additional field with sign in time
   user: {
     additionalFields: {
-      role: {
-        type: String,
-        default: "user",
+      userType: {
+        type: "string",
+        defaultValue: "user",
+        input: true,
       },
     },
   },

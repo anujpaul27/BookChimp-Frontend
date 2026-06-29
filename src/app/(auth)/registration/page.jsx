@@ -62,11 +62,12 @@ export default function RegisterPage() {
         email: formData.email,
         password: formData.password,
         name: formData.name,
-        role: formData.role,
+        userType: formData.role,
         callbackURL: "/",
       });
 
       if (error) {
+        console.log(error.message);
         toast.error(error.message || "Registration failed. Email may already exist.");
         return;
       }
@@ -245,7 +246,6 @@ export default function RegisterPage() {
                 <option value="" disabled>Select your role</option>
                 <option value="user">Reader / User</option>
                 <option value="librarian">Librarian</option>
-                <option value="admin">Admin</option>
               </select>
               {errors.role && <p className="text-red-500 text-sm mt-1">{errors.role}</p>}
             </div>

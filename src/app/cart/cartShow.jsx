@@ -8,48 +8,50 @@ import Link from "next/link";
 import Image from "next/image";
 import { UpdateOrDelete } from "@/components/lib/getData";
 
-export default function CartPage({carts,userId}) {
+export default function CartPage({ carts, userId }) {
   const [cart, setCart] = useState(carts);
   const [orderLoading, setOrderLoading] = useState(false);
 
   // Update Quantity
   const updateQuantity = (id, newQuantity) => {
     if (newQuantity < 1) return;
-    
-    setCart(cart.map(item =>
-      item._id === id ? { ...item, quantity: newQuantity } : item
-    ));
+
+    setCart(
+      cart.map((item) =>
+        item._id === id ? { ...item, quantity: newQuantity } : item,
+      ),
+    );
     toast.success("Quantity updated");
   };
 
   // Remove Item
-  const removeFromCart =async (id) => {
-
-    const res = await UpdateOrDelete(`/cart/delete/${id}`, 'delete')
-    if (res)
-    {
-      setCart(cart.filter(item => item._id !== id));
+  const removeFromCart = async (id) => {
+    const res = await UpdateOrDelete(`/cart/delete/${id}`, "delete");
+    if (res) {
+      setCart(cart.filter((item) => item._id !== id));
       toast.error("Item removed from cart");
+    } else {
+      toast.error("failed remove item");
     }
-    else 
-    {
-      toast.error('failed remove item')
-    }
-
   };
 
   // Clear Entire Cart
-  const clearCart = async() => {
-    const res = await UpdateOrDelete(`/cart/all/delete/${userId}`,'delete')
+  const clearCart = async () => {
+    const res = await UpdateOrDelete(`/cart/all/delete/${userId}`, "delete");
     if (res) {
       setCart([]);
       toast.info("Cart cleared");
-    }
-    else 
-    {
-      toast.error('failed product clear.')
+    } else {
+      toast.error("failed product clear.");
     }
   };
+
+   const subtotal = cart.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0,
+  );
+  const deliveryFee = 3.99;
+  const total = subtotal + deliveryFee;
 
   // Place Order (Simulated)
   const placeOrder = async () => {
@@ -58,26 +60,41 @@ export default function CartPage({carts,userId}) {
     setOrderLoading(true);
 
     // Simulate API delay
-    await new Promise(resolve => setTimeout(resolve, 1800));
-
-    toast.success("🎉 Order placed successfully! Your books are being prepared.");
+    const orderData = {
+      userId,
+      products: carts,
+      totalAmount: total,
+    };
+    console.log(orderData);
+    await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/order/create`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+       // Authorization: token,
+      },
+      body: JSON.stringify(orderData),
+    });
+    toast.success(
+      "🎉 Order placed successfully! Your books are being prepared.",
+    );
 
     // Clear cart after order
-    clearCart()
+    clearCart();
 
     // You can redirect to success page here later
     // router.push("/order-success");
   };
 
-  const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const deliveryFee = 3.99;
-  const total = subtotal + deliveryFee;
+ 
 
   return (
     <div className="min-h-screen bg-base-100 py-10">
       <div className="max-w-6xl mx-auto px-6">
         <div className="flex items-center gap-3 mb-8">
-          <Link href="/books" className="flex items-center gap-2 text-base-content/70 hover:text-base-content">
+          <Link
+            href="/books"
+            className="flex items-center gap-2 text-base-content/70 hover:text-base-content"
+          >
             <ArrowLeft size={20} />
             Continue Shopping
           </Link>
@@ -86,9 +103,14 @@ export default function CartPage({carts,userId}) {
 
         {cart.length === 0 ? (
           <div className="text-center py-20">
-            <ShoppingBag size={80} className="mx-auto text-base-content/30 mb-6" />
+            <ShoppingBag
+              size={80}
+              className="mx-auto text-base-content/30 mb-6"
+            />
             <h2 className="text-2xl font-semibold mb-2">Your cart is empty</h2>
-            <p className="text-base-content/60 mb-8">Start adding some great books!</p>
+            <p className="text-base-content/60 mb-8">
+              Start adding some great books!
+            </p>
             <Link href="/books" className="btn btn-primary">
               Browse Books
             </Link>
@@ -130,14 +152,20 @@ export default function CartPage({carts,userId}) {
                     <div className="flex items-center justify-between mt-6">
                       <div className="flex items-center gap-4">
                         <button
-                          onClick={() => updateQuantity(item._id, item.quantity - 1)}
+                          onClick={() =>
+                            updateQuantity(item._id, item.quantity - 1)
+                          }
                           className="btn btn-sm btn-circle btn-ghost"
                         >
                           <Minus size={18} />
                         </button>
-                        <span className="font-semibold w-8 text-center">{item.quantity}</span>
+                        <span className="font-semibold w-8 text-center">
+                          {item.quantity}
+                        </span>
                         <button
-                          onClick={() => updateQuantity(item._id, item.quantity + 1)}
+                          onClick={() =>
+                            updateQuantity(item._id, item.quantity + 1)
+                          }
                           className="btn btn-sm btn-circle btn-ghost"
                         >
                           <Plus size={18} />
