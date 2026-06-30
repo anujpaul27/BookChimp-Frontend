@@ -6,13 +6,13 @@ import { toast } from "react-toastify";
 import { UpdateOrDelete } from "@/components/lib/getData";
 
 
-export default function ManageAllBooks({allBooks}) {
+export default function ManageAllBooks({allBooks,token}) {
   const [books, setBooks] = useState(allBooks);
 
   const unpublish = (id) => {
     try 
     {
-      const res = UpdateOrDelete(`/book/unpublish-book/${id}`,"PATCH")
+      const res = UpdateOrDelete(`/book/unpublish-book/${id}`,"PATCH",token)
       if (res)
       {
         setBooks(books.map(b => b._id === id ? { ...b, status: "Unpublish" } : b));
@@ -32,7 +32,7 @@ export default function ManageAllBooks({allBooks}) {
   const deleteBook = (id) => {
     try
     {
-      const res = UpdateOrDelete(`/book/book-delete/${id}`,'delete')
+      const res = UpdateOrDelete(`/book/book-delete/${id}`,'delete',token)
       if (res)
       {
         setBooks(books.filter(b => b._id !== id));

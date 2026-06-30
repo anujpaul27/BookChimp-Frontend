@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import Link from "next/link";
 import { UpdateOrDelete } from "@/components/lib/getData";
 
-export default function ApprovalQueue({ pendingBooks }) {
+export default function ApprovalQueue({ pendingBooks,token }) {
   const [books, setBooks] = useState(pendingBooks);
   const [loadingDelBtn, setLoadingDelBtn] = useState(false)
   const [loadingUpBtn, setLoadingUpBtn] = useState(false)
@@ -15,7 +15,7 @@ export default function ApprovalQueue({ pendingBooks }) {
     setLoadingUpBtn(true)
     try 
     {
-      const res = await UpdateOrDelete(`/book/update-book/${id}`,"PATCH")
+      const res = await UpdateOrDelete(`/book/update-book/${id}`,"PATCH",token)
       if (res)
       {
         setBooks(books.filter((b) => b._id !== id));
@@ -34,7 +34,7 @@ export default function ApprovalQueue({ pendingBooks }) {
   const deleteBook = async (id) => {
     setLoadingDelBtn(true)
     try {
-      const res = await UpdateOrDelete(`/book/book-delete/${id}`, "DELETE");
+      const res = await UpdateOrDelete(`/book/book-delete/${id}`, "DELETE",token);
       if (res) {
         setBooks(books.filter((b) => b._id !== id));
         toast.error("Book deleted");

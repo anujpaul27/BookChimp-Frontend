@@ -24,9 +24,16 @@ const page = async () => {
   const books = await getData("book/all-book/without/pending/unpublish");
   const lengthOfBooks = books?.length || 0;
 
+  // get all order
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/order/delivered-order`)
+  const data = await res.json()
+  const allOrders = data.data
+  console.log(allOrders);
+  const orderLength = allOrders.length
+
   return (
     <div>
-      <AdminDashboard lengthOfBooks={lengthOfBooks} allUserLength={allUserLength} />
+      <AdminDashboard lengthOfBooks={lengthOfBooks} allUserLength={allUserLength} orderLength={orderLength}/>
     </div>
   );
 };

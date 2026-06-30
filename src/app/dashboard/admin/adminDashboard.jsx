@@ -25,12 +25,12 @@ const revenueTrend = [
   { month: "May", revenue: 7200 }, { month: "Jun", revenue: 8100 },
 ];
 
-export default function AdminDashboard({allUserLength,lengthOfBooks}) {
+export default function AdminDashboard({allUserLength,lengthOfBooks,orderLength}) {
 
   const quickStats = [
   { title: "Total Users", value: allUserLength, icon: Users, color: "text-primary" },
   { title: "Total Books", value: lengthOfBooks, icon: BookOpen, color: "text-success" },
-  { title: "Total Deliveries", value: "892", icon: Truck, color: "text-info" },
+  { title: "Total Deliveries", value: orderLength, icon: Truck, color: "text-info" },
   { title: "Total Revenue", value: "$48,291", icon: DollarSign, color: "text-warning" },
 ];
 
