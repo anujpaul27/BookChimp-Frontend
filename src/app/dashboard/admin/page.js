@@ -27,9 +27,8 @@ const page = async () => {
   // get all order
   const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/order/delivered-order`)
   const data = await res.json()
-  const allOrders = data.data
-  console.log(allOrders);
-  const orderLength = allOrders.length
+  const allOrders = data?.data || []
+  const orderLength = allOrders?.length || 0
 
   return (
     <div>
