@@ -6,11 +6,10 @@ import { redirect } from 'next/navigation';
 const page = async () => {
   const userId = await getUserServer()
   const token = await getUserToken();
-  console.log(userId);
 
   const books = await getData(`book/library-book/${userId}`,token)
   const TotalPendingForThisLib = await getData(`book/get-pending-book/${userId}`,token)
-  const pendingLength = TotalPendingForThisLib.length
+  const pendingLength = TotalPendingForThisLib.length || 0
   
   const user = await getUserServerSession()
   if (!user)
